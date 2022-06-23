@@ -30,7 +30,7 @@ public class ChatController {
 	@Autowired
 	MessagesService messagesService;
 	@MessageMapping("/chat.sendMessage")
-	//@SendTo("/topic/public/1234")
+	//@SendTo("/topic/public/1234")22
 	public void sendMessage(HttpServletRequest request,@Payload ChatMessage chatMessage) {
 		String receiverId = (String)request.getSession().getAttribute("receiver");
 		Messages mes = Messages.builder().receiverId(Integer.valueOf(receiverId)).
