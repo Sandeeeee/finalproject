@@ -20,13 +20,7 @@ public class PageController {
 		return "fileUpload";
 	}
 
-	@RequestMapping("/chatroom")
-	public String viewHomePage(HttpServletRequest request, Model model, String sender, String receiver) {
-		System.out.println(sender+" "+sender);
-		request.getSession().setAttribute("sender",sender);
-		request.getSession().setAttribute("receiver",receiver);
-		return "chatroom";
-	}
+	
 
 	@RequestMapping("/hello")
 	public String hello(Model model) {
