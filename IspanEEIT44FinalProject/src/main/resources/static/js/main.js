@@ -37,13 +37,13 @@ function connect(event) {
 function onConnected() {
 	// Subscribe to the Public Topic
 	var path = "";
-	if(receiver.localeCompare(sender)==1){
-		path = sender+":"+receiver;
-	}else{
-		path = receiver+":"+sender;
+	if (receiver.localeCompare(sender) == 1) {
+		path = sender + ":" + receiver;
+	} else {
+		path = receiver + ":" + sender;
 	}
-	console.log("PATH:"+path);
-	stompClient.subscribe('/topic/public/'+path, onMessageReceived);
+	console.log("PATH:" + path);
+	stompClient.subscribe('/topic/public/' + path, onMessageReceived);
 
 	// Tell your username to the server
 	// stompClient.send("/app/chat.addUser",
@@ -133,16 +133,43 @@ function getAvatarColor(messageSender) {
 
 function addHistory() {
 	var mydata = null;
-	$.get("/getChatData?sender="+sender +"receiver="+receiver, 
-	function(data1, status){
-	
-			
-		console.log(data1);
-		mydata = data1;
-	
-	}).done(function() {
-    alert( "second success" );
-  });
+	$.get("/getChatData?sender=" + sender + "&" + "receiver=" + receiver,
+		function(data1, status) {
+
+
+			console.log(data1);
+			mydata = data1;
+
+		}).done(function() {
+		
+			//console.log(JSON.parse(mydata));
+
+			for(i=0;i<20;i++){
+			var messageElement = document.createElement('li');
+			messageElement.classList.add('chat-message');
+			var avatarElement = document.createElement('i');
+			var avatarText = document.createTextNode("3");
+			avatarElement.appendChild(avatarText);
+			avatarElement.style['background-color'] = getAvatarColor("33");
+
+			messageElement.appendChild(avatarElement);
+
+			var usernameElement = document.createElement('span');
+			var usernameText = document.createTextNode("abcdefg");
+			usernameElement.appendChild(usernameText);
+			messageElement.appendChild(usernameElement);
+		
+
+			var textElement = document.createElement('p');
+			var messageText = document.createTextNode(message.content);
+			textElement.appendChild(messageText);
+
+			messageElement.appendChild(textElement);
+
+			messageArea.appendChild(messageElement);
+			messageArea.scrollTop = messageArea.scrollHeight;
+}
+});
 
 	
 		

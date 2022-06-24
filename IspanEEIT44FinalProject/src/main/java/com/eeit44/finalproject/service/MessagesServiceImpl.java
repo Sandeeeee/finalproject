@@ -26,10 +26,7 @@ public class MessagesServiceImpl implements MessagesService{
 //		return messagesDao.fileUpload(file);
 //	}
 	
-	@Override
-	public List<Messages> queryMessage(int senderId) {
-		return messagesDao.findBySenderId(senderId);
-	}
+	
 	
 
 	@Override
@@ -41,5 +38,11 @@ public class MessagesServiceImpl implements MessagesService{
 	public void deleteMessage(int receiverId) {
 		messagesDao.deleteByReceiverId(receiverId);
 		
+	}
+
+	@Override
+	public List<Messages> queryMessage(int senderId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

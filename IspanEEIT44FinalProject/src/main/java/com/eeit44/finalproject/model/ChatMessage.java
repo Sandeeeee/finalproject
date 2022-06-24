@@ -1,8 +1,11 @@
 package com.eeit44.finalproject.model;
 
+import lombok.Builder;
+
 /**
  * Created by rajeevkumarsingh on 24/07/17.
  */
+@Builder
 public class ChatMessage {
     private MessageType type;
     private String content;
