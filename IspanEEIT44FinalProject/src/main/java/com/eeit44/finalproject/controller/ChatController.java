@@ -27,33 +27,25 @@ public class ChatController {
 	
     @MessageMapping("/chat.sendMessage")
     public void sendMessage(@Payload ChatMessage chatMessage) {
-    	System.out.println(chatMessage.getReceiver() );
+    	System.out.println(chatMessage.getReceiverId() );
     	//http://localhost:3000/chatroom?receiver=1&sender=2
-    	String channel = "";
-    	if(chatMessage.getSender().compareTo(chatMessage.getReceiver())==1) {
-    		channel = chatMessage.getReceiver() + ":" +  chatMessage.getSender();
+    	String topic = "";
+    	if(chatMessage.getSenderId().compareTo(chatMessage.getReceiverId())==1) {
+    		topic = chatMessage.getReceiverId() + ":" +  chatMessage.getSenderId();
     	}else {
-    		channel = chatMessage.getSender() + ":" + chatMessage.getReceiver()   ;
+    		topic = chatMessage.getSenderId() + ":" + chatMessage.getReceiverId()   ;
     	}
     	
-    	Messages msg = Messages.builder().senderId(Integer.valueOf(chatMessage.getSender()))
-    			.receiverId(Integer.valueOf(chatMessage.getReceiver())).created(new Date())
-    			.text(chatMessage.getContent()).build();
+    	Messages msg = Messages.builder().senderId(Integer.valueOf(chatMessage.getSenderId()))
+    			.receiverId(Integer.valueOf(chatMessage.getReceiverId())).created(new Date())
+    			.text(chatMessage.getContent()).channel(chatMessage.getChannel()).build();
     	messagesService.insertMessage(msg);
     	
     	
-    	System.out.println("/topic/public/"+channel );
-		simpMessagingTemplate.convertAndSend("/topic/public/"+channel, chatMessage);
+    	System.out.println("/topic/public/"+topic );
+		simpMessagingTemplate.convertAndSend("/topic/public/"+topic, chatMessage);
      //http://localhost:3000/chatroom?r=1&s=2
     }
 
-    @MessageMapping("/chat.addUser")
-    @SendTo("/topic/public")
-    public ChatMessage addUser(@Payload ChatMessage chatMessage,
-                               SimpMessageHeaderAccessor headerAccessor) {
-        // Add username in web socket session
-        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-        return chatMessage;
-    }
 
 }

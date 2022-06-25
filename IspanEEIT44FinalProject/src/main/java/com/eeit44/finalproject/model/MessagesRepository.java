@@ -13,9 +13,12 @@ public interface MessagesRepository extends JpaRepository<Messages, Integer> {
 	
 	@Query(value = "select * from messages  "
 			+ "where (senderId=:senderId and receiverId=:receiverId) "
-			+ "or (senderId=:receiverId and receiverId=:senderId)"
+			+ "or (senderId=:receiverId and receiverId=:senderId) and channel =:channel"
 			+ "    order by created", nativeQuery=true)
-	public List<Messages> findChatMessageBySenderIdAndRecevierId(@Param(value = "senderId") int senderId,@Param(value = "receiverId") int receiverId);
+	public List<Messages> findChatMessageBySenderIdAndRecevierId(@Param(value = "senderId") int senderId
+			,@Param(value = "receiverId") int receiverId,
+			@Param(value = "channel") String  channel
+			);
 	
 	@Query(value = "select  from (select ROW_NUMBER() OVER (PARTITION BY receiverId ORDER BY created desc) as ROW_ID ,* from messages) as lastone where lastone.ROW_ID =1  order by created desc", nativeQuery=true)
 	public List<Messages> queryLastMessage (@Param(value = "senderId") int senderId);

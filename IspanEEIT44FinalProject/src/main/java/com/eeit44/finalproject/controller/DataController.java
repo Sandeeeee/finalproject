@@ -21,16 +21,17 @@ public class DataController {
 	
 	
 	@RequestMapping("/getChatData")
-	public @ResponseBody ChatList getChatData(String sender ,String receiver) {
+	public @ResponseBody ChatList getChatData(String sender ,String receiver, String channel) {
 		//http://localhost:3000/getChatData?receiver=1&sender=2
 		ChatList chatList = new ChatList();
 
-		List<Messages> messageList = messagesRepository.findChatMessageBySenderIdAndRecevierId(Integer.valueOf(sender), Integer.valueOf(receiver));
+		List<Messages> messageList = messagesRepository.findChatMessageBySenderIdAndRecevierId(Integer.valueOf(sender),
+				Integer.valueOf(receiver),channel);
         
 		List<ChatMessage> chatMessageList = new ArrayList<ChatMessage>();
 		for(Messages msg : messageList) {
-			ChatMessage cm = ChatMessage.builder().sender(String.valueOf(msg.getSenderId()))
-					.receiver(String.valueOf(msg.getReceiverId())).content(msg.getText()).build();		
+			ChatMessage cm = ChatMessage.builder().senderId(String.valueOf(msg.getSenderId()))
+					.receiverId(String.valueOf(msg.getReceiverId())).content(msg.getText()).build();		
 			chatMessageList.add(cm);
 		}
 		

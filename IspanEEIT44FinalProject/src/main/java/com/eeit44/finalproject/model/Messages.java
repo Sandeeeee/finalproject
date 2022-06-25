@@ -42,5 +42,8 @@ public class Messages {
 	
 	@Column(name="created")
 	private	Date created;
+	
+	@Column(name="channel")
+	private	String channel;
 
 }

@@ -14,15 +14,18 @@
     <div id="chat-page" class="hidden">
         <div class="chat-container">
             <div class="chat-header">
-                <h2>Spring WebSocket Chat Demo</h2>
-                <p id="sender" th:text="${sender}" />
-                <p id="receiver" th:text="${receiver}" />
+                <h2 th:text="${channel}+ '  聊天室'"/>
+                <p class="hidden" id="senderId" th:text="${senderId}" />
+                <p class="hidden" id="receiverId" th:text="${receiverId}" />
+                <p class="hidden" id="senderName" th:text="${senderName}" />
+                <p class="hidden" id="receiverName" th:text="${receiverName}" />
+                <p class="hidden" id="channel" th:text="${channel}" />
             </div>
             <div class="connecting">
                 Connecting...
             </div>
             <ul id="messageArea">
-
+			
             </ul>
             <form id="messageForm" name="messageForm" nameForm="messageForm">
                 <div class="form-group">

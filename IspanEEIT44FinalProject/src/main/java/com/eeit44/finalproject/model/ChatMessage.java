@@ -1,52 +1,23 @@
 package com.eeit44.finalproject.model;
 
+import java.awt.TrayIcon.MessageType;
+
 import lombok.Builder;
+import lombok.Data;
 
 /**
  * Created by rajeevkumarsingh on 24/07/17.
  */
 @Builder
+@Data
 public class ChatMessage {
     private MessageType type;
     private String content;
-    private String sender;
-    private String receiver;
+    private String senderId;
+    private String receiverId;
+    private String senderName;
+    private String receiverName;
+    private String channel;
 
-    public enum MessageType {
-        CHAT,
-        JOIN,
-        LEAVE
-    }
-
-    public MessageType getType() {
-        return type;
-    }
-
-    public void setType(MessageType type) {
-        this.type = type;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getSender() {
-        return sender;
-    }
-
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
-    
-    public String getReceiver() {
-        return receiver;
-    }
-
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
-    }
+ 
 }

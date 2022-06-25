@@ -9,18 +9,23 @@ var connectingElement = document.querySelector('.connecting');
 
 var stompClient = null;
 var username = null;
-var sender = null;
-var receiver = null;
+var senderId = null;
+var receiverId = null;
+var senderName = null;
+var receiverName = null;
+var channel = null;
 var colors = [
 	'#2196F3', '#32c787', '#00BCD4', '#ff5652',
 	'#ffc107', '#ff85af', '#FF9800', '#39bbb0'
 ];
 
 function connect(event) {
-	username = document.getElementById("sender").innerText;
-	sender = document.getElementById("sender").innerText;
-	receiver = document.getElementById("receiver").innerText;
-
+	username = document.getElementById("senderId").innerText;
+	senderId = document.getElementById("senderId").innerText;
+	receiverId = document.getElementById("receiverId").innerText;
+	senderName = document.getElementById("senderName").innerText;
+	receiverName = document.getElementById("receiverName").innerText;
+	channel = document.getElementById("channel").innerText;
 	if (username) {
 		// usernamePage.classList.add('hidden');
 		chatPage.classList.remove('hidden');
@@ -37,10 +42,10 @@ function connect(event) {
 function onConnected() {
 	// Subscribe to the Public Topic
 	var path = "";
-	if (receiver.localeCompare(sender) == 1) {
-		path = sender + ":" + receiver;
+	if (receiverId.localeCompare(senderId) == 1) {
+		path = senderId + ":" + receiverId;
 	} else {
-		path = receiver + ":" + sender;
+		path = receiverId + ":" + senderId;
 	}
 	console.log("PATH:" + path);
 	stompClient.subscribe('/topic/public/' + path, onMessageReceived);
@@ -67,10 +72,13 @@ function sendMessage(event) {
 
 	if (messageContent && stompClient) {
 		var chatMessage = {
-			sender: sender,
+			senderId: senderId,
 			content: messageInput.value,
-			receiver: receiver,
-			type: 'CHAT'
+			receiverId: receiverId,
+			senderName: senderName,
+			receiverName: receiverName,
+			channel: channel
+
 		};
 
 		stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(chatMessage));
@@ -85,30 +93,21 @@ function onMessageReceived(payload) {
 
 	var messageElement = document.createElement('li');
 
-	//if(!(message.sender== sender && message.receiver== receiver)){
-	//return;
-	//}
-	if (message.type === 'JOIN') {
-		messageElement.classList.add('event-message');
-		message.content = message.sender + ' joined!';
-	} else if (message.type === 'LEAVE') {
-		messageElement.classList.add('event-message');
-		message.content = message.sender + ' left!';
-	} else {
-		messageElement.classList.add('chat-message');
 
-		var avatarElement = document.createElement('i');
-		var avatarText = document.createTextNode(message.sender[0]);
-		avatarElement.appendChild(avatarText);
-		avatarElement.style['background-color'] = getAvatarColor(message.sender);
+	messageElement.classList.add('chat-message');
 
-		messageElement.appendChild(avatarElement);
+	var avatarElement = document.createElement('i');
+	var avatarText = document.createTextNode(message.senderName[0]);
+	avatarElement.appendChild(avatarText);
+	avatarElement.style['background-color'] = getAvatarColor(message.senderName);
 
-		var usernameElement = document.createElement('span');
-		var usernameText = document.createTextNode(message.sender);
-		usernameElement.appendChild(usernameText);
-		messageElement.appendChild(usernameElement);
-	}
+	messageElement.appendChild(avatarElement);
+
+	var usernameElement = document.createElement('span');
+	var usernameText = document.createTextNode(message.senderName);
+	usernameElement.appendChild(usernameText);
+	messageElement.appendChild(usernameElement);
+
 
 	var textElement = document.createElement('p');
 	var messageText = document.createTextNode(message.content);
@@ -133,48 +132,62 @@ function getAvatarColor(messageSender) {
 
 function addHistory() {
 	var mydata = null;
-	$.get("/getChatData?sender=" + sender + "&" + "receiver=" + receiver,
+	$.get("/getChatData?sender=" + senderId + "&" + "receiver=" + receiverId+ "&channel=" + channel,
 		function(data1, status) {
 
-
-			console.log(data1);
-			mydata = data1;
+			console.log(JSON.stringify(data1));
+			mydata = JSON.stringify(data1);
 
 		}).done(function() {
-		
-			//console.log(JSON.parse(mydata));
 
-			for(i=0;i<20;i++){
-			var messageElement = document.createElement('li');
-			messageElement.classList.add('chat-message');
-			var avatarElement = document.createElement('i');
-			var avatarText = document.createTextNode("3");
-			avatarElement.appendChild(avatarText);
-			avatarElement.style['background-color'] = getAvatarColor("33");
+			var jsonData = JSON.parse(mydata);
+			for (var i = 0; i < jsonData.chatlist.length; i++) {
+				var counter = jsonData.chatlist[i];
+				console.log(counter);
 
-			messageElement.appendChild(avatarElement);
 
-			var usernameElement = document.createElement('span');
-			var usernameText = document.createTextNode("abcdefg");
-			usernameElement.appendChild(usernameText);
-			messageElement.appendChild(usernameElement);
-		
+				var messageElement = document.createElement('li');
+				messageElement.classList.add('chat-message');
+				var avatarElement = document.createElement('i');
 
-			var textElement = document.createElement('p');
-			var messageText = document.createTextNode(message.content);
-			textElement.appendChild(messageText);
+				if (counter.senderId == senderId) {
 
-			messageElement.appendChild(textElement);
+					var avatarText = document.createTextNode(senderName[0]);
+					avatarElement.appendChild(avatarText);
+					avatarElement.style['background-color'] = getAvatarColor(senderName);
+					messageElement.appendChild(avatarElement);
+					var usernameElement = document.createElement('span');
+					var usernameText = document.createTextNode(senderName);
+					usernameElement.appendChild(usernameText);
+					messageElement.appendChild(usernameElement);
+				} else {
+					var avatarText = document.createTextNode(receiverName[0]);
+					avatarElement.appendChild(avatarText);
+					avatarElement.style['background-color'] = getAvatarColor(receiverName);
+					messageElement.appendChild(avatarElement);
+					var usernameElement = document.createElement('span');
+					var usernameText = document.createTextNode(receiverName);
+					usernameElement.appendChild(usernameText);
+					messageElement.appendChild(usernameElement);
+				}
 
-			messageArea.appendChild(messageElement);
-			messageArea.scrollTop = messageArea.scrollHeight;
-}
-});
 
-	
-		
-	
-	
+
+				var textElement = document.createElement('p');
+				var messageText = document.createTextNode(counter.content);
+				textElement.appendChild(messageText);
+
+				messageElement.appendChild(textElement);
+
+				messageArea.appendChild(messageElement);
+				messageArea.scrollTop = messageArea.scrollHeight;
+			}
+		});
+
+
+
+
+
 
 }
 
