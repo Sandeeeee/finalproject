@@ -20,7 +20,7 @@ public class UIController {
 		
 		//httpservletRquest
 		//HttpSession session = request.getSession();
-		//session.getAttribute("senderId", senderId);
+		//session.getAttribute("senderId", senderId);取得資料
 		
 		
 		model.addAttribute("senderId", senderId);
