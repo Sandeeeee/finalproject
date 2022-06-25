@@ -13,9 +13,6 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import com.eeit44.finalproject.model.ChatMessage;
 import com.eeit44.finalproject.service.MessagesService;
 
-/**
- * Created by rajeevkumarsingh on 25/07/17.
- */
 @Component
 public class WebSocketEventListener {
 
@@ -23,6 +20,7 @@ public class WebSocketEventListener {
 
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
+    
     @Autowired
 	MessagesService messagesService;
     
