@@ -33,15 +33,15 @@ public class UIController {
 	
 	//@RequestMapping("/redirectToChatRoom")
 	//public String redirectToChatRoom(Model model,
-//HttpServeletRequest hq){
+	//HttpServeletRequest hq{
 	
 	//httpservletRquest
 	//HttpSession session = request.getSession();
 	//session.getAttribute("senderId");
 	// url  組好
 	// java redirect(url)
-//}
+	//}
 	
-//整合:透過session讓request參數為空
-//微服務:帶參數(明碼)	
+	//整合:透過session讓request參數為空
+	//微服務:帶參數(明碼)	
 }
