@@ -19,10 +19,10 @@ public class MessagesServiceImpl implements MessagesService{
 		return messagesDao.save(messages);
 	}
 
-	@Override
-	public void deleteMessage(int receiverId) {
-		messagesDao.deleteByReceiverId(receiverId);
-		
-	}
+//	@Override
+//	public void deleteMessage(int receiverId) {
+//		messagesDao.deleteByReceiverId(receiverId);
+//		
+//	}
 
 }

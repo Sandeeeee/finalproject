@@ -20,18 +20,18 @@ public interface MessagesRepository extends JpaRepository<Messages, Integer> {
 			@Param(value = "channel") String  channel
 			);
 	
-	@Query(value = "select  from (select ROW_NUMBER() OVER (PARTITION BY receiverId ORDER BY created desc) as ROW_ID ,* from messages) as lastone where lastone.ROW_ID =1  order by created desc", nativeQuery=true)
-	public List<Messages> queryLastMessage (@Param(value = "senderId") int senderId);
-	
-//	select * from messages where senderId=1001 and receiverId=3 or senderId=3 and receiverId=1001 order by created asc
-
-//	@Query(value ="" ", nativeQuery=true)
-//	public  File fileUpload (@Param(value = "senderId") int senderId);
+//	@Query(value = "select  from (select ROW_NUMBER() OVER (PARTITION BY receiverId ORDER BY created desc) as ROW_ID ,* from messages) as lastone where lastone.ROW_ID =1  order by created desc", nativeQuery=true)
+//	public List<Messages> queryLastMessage (@Param(value = "senderId") int senderId);
 //	
-	
-	@Modifying
-	@Query(value = "delete from messages where receiverId = :receiverId", nativeQuery=true)
-	public void deleteByReceiverId(@Param(value = "receiverId") int receiverId);
+////	select * from messages where senderId=1001 and receiverId=3 or senderId=3 and receiverId=1001 order by created asc
+//
+////	@Query(value ="" ", nativeQuery=true)
+////	public  File fileUpload (@Param(value = "senderId") int senderId);
+////	
+//	
+//	@Modifying
+//	@Query(value = "delete from messages where receiverId = :receiverId", nativeQuery=true)
+//	public void deleteByReceiverId(@Param(value = "receiverId") int receiverId);
 
 	
 }

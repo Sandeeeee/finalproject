@@ -7,7 +7,7 @@ public interface MessagesService {
 
 	Messages insertMessage (Messages messages);
 
-	void deleteMessage (int receiverId);
+//	void deleteMessage (int receiverId);
 
 	
 }
