@@ -28,17 +28,17 @@ public class Messages {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="messageId")
-	private	int	messageId ;
+	private	String	messageId ;
 	
 	@Column(name="text")
 	private String text;
 
 	
 	@Column(name="senderId")
-	private	int senderId ;
+	private	String senderId ;
 	
 	@Column(name="receiverId")
-	private	int receiverId;
+	private	String receiverId;
 	
 	@Column(name="created")
 	private	String created;

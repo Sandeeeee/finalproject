@@ -10,16 +10,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>ChatPage Admin</title>
+<title>queryMessagePageAdmin</title>
 
 <script src="<c:url value='/webjars/jquery/jquery.min.js' />"></script>
 
 </head>
 <body>
-<h6>ChatPage Admin</h6>
+<h6>queryMessagePageAdmin</h6>
 	<div>
 		<label>用戶:</label>${userId} <label>密碼:</label>${password} <br>
 		
+			
 		<form method="get" action=" /queryGroupMessage">
 		<label> senderId:</label> <input  type="text" name="senderId" />
 		<label>receiverId:</label><input  type="text" name="receiverId" />
@@ -27,46 +28,27 @@
 		</form>
 		
 		<p>訊息</p>
-		<c:forEach var="messages" items="${page.content}">
+		<c:forEach var="groupMessage" items="${groupMessage}">
 
-			<c:out value="${messages.senderId}" />
+			<c:out value="${groupMessage.senderId}" />
 			<br>
-			<c:out value="${messages.receiverId}" />
+			<c:out value="${groupMessage.receiverId}" />
 			<br>
-			<c:out value="${messages.text}" />
+			<c:out value="${groupMessage.text}" />
 			<br>
-			<c:out value="${messages.created}" />
+			<c:out value="${groupMessage.created}" />
 			<br>
 
 			<span class=edit-link> 
-			<a href="${contextRoot}/deleteMessage?messageId=${messages.messageId}"
+			<a href="${contextRoot}/deleteMessage?messageId=${groupMessage.messageId}"
 				onclick="return confirm ('真的要刪除嗎?')">
 					<button class="btn btn-danger">刪除</button>
 			</a>
 			</span>
 			<hr>
 		</c:forEach>
-	<!-- 分頁設定 -->
-		<div class="row justify-content-center">
-			<div class="col-9">
-
-				<c:forEach var="pageNumber" begin="1" end="${page.totalPages}">
-					<c:choose>
-						<c:when test="${page.number != pageNumber-1}">
-							<a href="${contextRoot}/message/all?p=${pageNumber}"> <c:out
-									value="${pageNumber}" /></a>
-						</c:when>
-
-						<c:otherwise>
-							<c:out value="${pageNumber}" />
-						</c:otherwise>
-					</c:choose>
-
-					<c:if test="${pageNumber != page.totalPages}"> | </c:if>
-				</c:forEach>
-
-			</div>
-		</div>
+	
+			
 	</div>
 	<br>
 </body>

@@ -15,7 +15,7 @@
 </head>
 <body>
 
-	<form method="get" action="/login">
+	<form method="get" action="/loginAndViewAllMessages">
 		<div align='center'>
 		
 			<div>

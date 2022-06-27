@@ -17,8 +17,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
-      <a class="nav-link active" href="${contextRoot}/">查看所有訊息<span class="sr-only">(current)</span></a>
-    
+      <a class="nav-link active" href="${contextRoot}/queryMessages">查看訊息<span class="sr-only">(current)</span></a>
       <a class="nav-link" href="${contextRoot}/deletePage">刪除訊息</a>
     </div>
   </div>

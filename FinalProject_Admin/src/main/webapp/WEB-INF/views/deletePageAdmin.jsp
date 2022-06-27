@@ -19,7 +19,14 @@
 <h2>刪除畫面</h2>
 
 		<label>用戶:</label>${userId} <label>密碼:</label>${password} <br>
-		<p>訊息刪除 方法</p>
+		<p>訊息刪除 </p>
+
+			
+		<form method="get" action=" /deleteMessageByGroup">
+		<label> senderId:</label> <input  type="text" name="senderId" />
+		<label>receiverId:</label><input  type="text" name="receiverId" />
+		<input type="submit" value="查詢">
+		</form>
 
 </body>
 </html>

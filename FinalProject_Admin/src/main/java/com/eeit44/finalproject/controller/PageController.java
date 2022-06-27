@@ -5,12 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class PageController {
-
-
 		
 	@GetMapping("/deletePage")
 	public String deleteMessagePage() {
 		return "deletePageAdmin";
 	}
+	
+	@GetMapping("/queryMessages")
+	public String queryMessagePage() {
+		return "chatPageAdmin";
+	}
+	
 	
 }
